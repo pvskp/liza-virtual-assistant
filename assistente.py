@@ -37,12 +37,16 @@ class Assistant():
         self.text_to_speech.runAndWait()
 
 def receber_comando(assistente):
+    ## TODO: ativar modo de escuta apenas quando seu nome for chamado
     while True:
         comando = assistente.listening()
         print(comando)
         if (comando == "Desligar assistente"):
             assistente.speak("Desligando assistente")
             break
+        if (comando == "Bom dia"):
+            assistente.falar_bom_dia()
+        time.sleep(1)
 
 def main():
     assistente = Assistant()
