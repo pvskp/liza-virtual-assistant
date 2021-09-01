@@ -13,16 +13,18 @@ class Liza():
         self.text_to_speech.setProperty('voice', VOICE) #Linux -> 'mb-br4' from mbrola
         self.text_to_speech.setProperty('rate', 50)
         self.recognizer = sr.Recognizer()
+        self.recognizer.energy_threshold = 1200
+        self.recognizer.dynamic_energy_threshold = False
 
     def was_called(self):
-        with sr.Microphone(chunk_size=5000) as source:
-            audio = self.recognizer.listen(source, phrase_time_limit=4)
+        with sr.Microphone() as source: # chunk size 5000
+            audio = self.recognizer.listen(source)
 
         command = 'None'
 
         try:
             command = self.recognizer.recognize_google(audio,language='pt-br')
-        except Exception as listeningError:
+        except Exception:
             print("Não fui chamado")
 
         if ('Lisa' in command):
@@ -32,8 +34,8 @@ class Liza():
 
     def listening(self):
         command = "Comando não reconhecido"
-        with sr.Microphone(chunk_size=5000) as source:
-            audio = self.recognizer.listen(source, phrase_time_limit=4)
+        with sr.Microphone() as source:
+            audio = self.recognizer.listen(source)
 
         try:
             print("Ouvindo...")
@@ -60,11 +62,9 @@ class Liza():
         self.speak(f"Hoje é dia {now.day} de {convert_number_to_month(now.month)} de {now.year}")
 
     def falar_bom_dia(self):
-        self.text_to_speech.say("Bom dia Paulo")
+        self.speak("Bom dia Paulo")
         time.sleep(0.4)
-        self.text_to_speech.say("Como estás")
-
-        self.text_to_speech.runAndWait()
+        self.speak("Como estás")
 
     def present_yourself(self):
         self.speak("Meu nome é Liza, fui desenvolvida para um projeto pessoal por Paulo Vinícius")
@@ -80,9 +80,5 @@ class Liza():
 
     def turn_on_ps4(self):
         self.speak('Ok, ligando o PS4')
-        try:
-            start_ps4()
-            self.speak("Prontinho o ps4 está ligado")
-        except Exception as error:
-            self.speak('Não consegui acessar o PS4, confira se ele está no modo de repouso.')
-
+        start_ps4()
+        self.speak("Prontinho o ps4 está ligado")

@@ -5,3 +5,7 @@ def start_chiaki():
 
 def start_ps4():
     os.system('ps4-waker')
+
+def start_discord():
+    os.system('discord')
+    

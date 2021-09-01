@@ -8,9 +8,9 @@ def receber_comando(assistente):
             print("Fui chamado")
             assistente.speak("Estou ouvindo")
             comando = 'None'
-            while comando == 'None':
+            while (comando == 'None'):
                 comando = assistente.listening()
-                if (comando == "Bom dia"):
+                if (comando == 'bom dia'):
                     assistente.falar_bom_dia()
                 elif ('hora' in comando):
                     assistente.time()
