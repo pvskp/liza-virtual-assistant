@@ -13,8 +13,8 @@ class Assistant():
         self.recognizer = sr.Recognizer()
 
     def was_called(self):
-        with sr.Microphone(chunk_size=3000) as source:
-            audio = self.recognizer.listen(source, phrase_time_limit=2)
+        with sr.Microphone(chunk_size=5000) as source:
+            audio = self.recognizer.listen(source, phrase_time_limit=4)
 
         command = 'None'
 
@@ -30,8 +30,8 @@ class Assistant():
 
     def listening(self):
         command = "Comando não reconhecido"
-        with sr.Microphone(chunk_size=3000) as source:
-            audio = self.recognizer.listen(source, phrase_time_limit=3)
+        with sr.Microphone(chunk_size=5000) as source:
+            audio = self.recognizer.listen(source, phrase_time_limit=4)
 
         try:
             print("Ouvindo...")
@@ -69,6 +69,7 @@ def receber_comando(assistente):
     while True:
         if (assistente.was_called()):
             print("Fui chamado")
+            assistente.speak("Estou ouvindo")
             comando = 'None'
             while comando == 'None':
                 comando = assistente.listening()
@@ -76,7 +77,7 @@ def receber_comando(assistente):
                     assistente.falar_bom_dia()
                 elif ('hora' in comando):
                     assistente.time()
-                elif ('data' in comando):
+                elif (('data' in comando) or ('dia' in comando)):
                     assistente.date()
 
 def main():
