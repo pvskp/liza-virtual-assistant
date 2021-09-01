@@ -1,4 +1,3 @@
-from time import process_time_ns
 from assistente import Liza
 
 VOICE = 'mb-br4'
@@ -15,10 +14,14 @@ def receber_comando(assistente):
                     assistente.falar_bom_dia()
                 elif ('hora' in comando):
                     assistente.time()
-                elif (('data' in comando) or ('dia' in comando)):
+                elif (('data' in comando) or ('que dia' in comando)):
                     assistente.date()
                 elif (('apresente' in comando) or ('quem é você') in comando):
                     assistente.present_yourself()
+                elif (('cotação' in comando) and ('dólar' in comando)):
+                    assistente.get_dollar_currency()
+                elif (('liga' in comando) and ('ps4' in comando)):
+                    assistente.turn_on_ps4()
 
 def main():
     assistente = Liza(VOICE)

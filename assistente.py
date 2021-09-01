@@ -3,7 +3,9 @@ import speech_recognition as sr
 import time
 import datetime
 from number_to_month import convert_number_to_month
-
+import requests
+import json
+from iot_functions import *
 
 class Liza():
     def __init__(self, VOICE) -> None:
@@ -66,3 +68,21 @@ class Liza():
 
     def present_yourself(self):
         self.speak("Meu nome é Liza, fui desenvolvida para um projeto pessoal por Paulo Vinícius")
+
+    def get_dollar_currency(self):
+        dollar_currency = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL')
+        dollar_currency = dollar_currency.json()
+        value_in_reais = dollar_currency['USDBRL']['bid']
+        reais = int((float(value_in_reais) // 1))
+        centavos = (int((float(value_in_reais) % 1)*100))
+
+        self.speak(f"Atualmente o dólar está valendo {reais} reais e {centavos} centavos")
+
+    def turn_on_ps4(self):
+        self.speak('Ok, ligando o PS4')
+        try:
+            start_ps4()
+            self.speak("Prontinho o ps4 está ligado")
+        except Exception as error:
+            self.speak('Não consegui acessar o PS4, confira se ele está no modo de repouso.')
+
