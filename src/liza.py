@@ -6,8 +6,9 @@ import requests
 import json
 from os import system as execute
 
-from src.iot_functions import *
-from src.number_to_month import convert_number_to_month
+from src.functionalities.iot_functions import *
+from src.functionalities.number_to_month import convert_number_to_month
+from src.functionalities.dollar_currency import get_currency
 
 class Liza():
     def __init__(self, voice='mb-br4', rate=110) -> None:
@@ -70,11 +71,7 @@ class Liza():
         self.speak("Meu nome é Liza, fui desenvolvida para um projeto pessoal por Paulo Vinícius")
 
     def get_dollar_currency(self):
-        dollar_currency = requests.get('https://economia.awesomeapi.com.br/last/USD-BRL')
-        dollar_currency = dollar_currency.json()
-        value_in_reais = dollar_currency['USDBRL']['bid']
-        reais = int((float(value_in_reais) // 1))
-        centavos = (int((float(value_in_reais) % 1)*100))
+        reais, centavos = get_currency()
 
         self.speak(f"Atualmente o dólar está valendo {reais} reais e {centavos} centavos")
 
