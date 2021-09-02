@@ -13,11 +13,11 @@ class Liza():
         self.text_to_speech.setProperty('voice', VOICE) #Linux -> 'mb-br4' from mbrola
         self.text_to_speech.setProperty('rate', 50)
         self.recognizer = sr.Recognizer()
-        self.recognizer.energy_threshold = 1200
+        self.recognizer.energy_threshold = 1200 # Sensibilidade do microfone
         self.recognizer.dynamic_energy_threshold = False
 
     def was_called(self):
-        with sr.Microphone() as source: # chunk size 5000
+        with sr.Microphone() as source:
             audio = self.recognizer.listen(source)
 
         command = 'None'
@@ -82,3 +82,7 @@ class Liza():
         self.speak('Ok, ligando o PS4')
         start_ps4()
         self.speak("Prontinho o ps4 está ligado")
+
+    def standby_ps4(self):
+        self.speak('Colocando PS4 em modo de repouso')
+        standby_ps4()

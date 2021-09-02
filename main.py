@@ -1,6 +1,4 @@
-from assistente import Liza
-
-VOICE = 'mb-br4'
+from src.liza import Liza
 
 def receber_comando(assistente):
     while True:
@@ -22,9 +20,11 @@ def receber_comando(assistente):
                     assistente.get_dollar_currency()
                 elif (('liga' in comando) and ('ps4' in comando)):
                     assistente.turn_on_ps4()
+                elif (('repouso' in comando) and ('ps4' in comando)):
+                    assistente.standby_ps4()
 
 def main():
-    assistente = Liza(VOICE)
+    assistente = Liza()
     receber_comando(assistente)
 
 if __name__ == '__main__':
