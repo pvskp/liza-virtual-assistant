@@ -1,4 +1,3 @@
-# import pyttsx3
 import speech_recognition as sr
 import time
 import datetime
@@ -31,8 +30,10 @@ class Liza():
 
         if ('Lisa' in command):
             return True
+
         else:
             return False
+
     def speak(self, text):
         execute(f'espeak -s {self.rate} -v {self.voice} "{text}"')
 
@@ -49,10 +50,10 @@ class Liza():
         except Exception as listeningError:
             print(listeningError)
             self.speak("Desculpe não entendi")
+
             return "None"
 
         return command.lower()
-
 
     def time(self):
         now = datetime.datetime.now()

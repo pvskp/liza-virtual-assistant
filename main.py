@@ -8,7 +8,7 @@ def receber_comando(assistente):
             comando = 'None'
             while (comando == 'None'):
                 comando = assistente.listening()
-                
+
                 if (comando == 'bom dia'):
                     assistente.falar_bom_dia()
 
@@ -26,7 +26,7 @@ def receber_comando(assistente):
 
                 elif (('liga' in comando) and ('ps4' in comando)):
                     assistente.turn_on_ps4()
-                    
+
                 elif (('repouso' in comando) and ('ps4' in comando)):
                     assistente.standby_ps4()
 
