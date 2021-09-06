@@ -30,6 +30,8 @@ def receber_comando(assistente):
                 elif (('repouso' in comando) and ('ps4' in comando)):
                     assistente.standby_ps4()
 
+                elif (('tempo' in comando) or ('clima' in comando)):
+                    assistente.weather()
 
 def main():
     assistente = Liza()

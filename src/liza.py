@@ -1,3 +1,4 @@
+from sys import setdlopenflags
 import speech_recognition as sr
 import time
 import datetime
@@ -8,9 +9,11 @@ from os import system as execute
 from src.functionalities.iot_functions import *
 from src.functionalities.number_to_month import convert_number_to_month
 from src.functionalities.dollar_currency import get_currency
+from src.functionalities.weather import OpenWeather
 
 class Liza():
-    def __init__(self, voice='mb-br4', rate=110) -> None:
+    def __init__(self, voice='mb-br4', rate=110, locale='Campinas') -> None:
+        self.locale = locale
         self.voice = voice
         self.rate = rate
         self.recognizer = sr.Recognizer()
@@ -84,3 +87,14 @@ class Liza():
     def standby_ps4(self):
         self.speak('Colocando PS4 em modo de repouso')
         standby_ps4()
+
+    def weather(self):
+        info = OpenWeather(city=self.locale)
+        weather = info.get_weather()
+        temp = info.get_temperature()
+
+        if (weather == 'Clear'):
+            self.speak(f"Em {self.locale} o clima está limpo e a temperatura é de aproximadamente {temp:.0f} graus celsius")
+        
+        else:
+            self.speak("Me desculpe, ainda não sei identificar o tempo nestas condições")

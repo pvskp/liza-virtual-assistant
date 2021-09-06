@@ -1,15 +1,13 @@
 import requests
 import json
 
-from requests.api import request
-
 class OpenWeather():
     def __init__(self,city='Campinas', unit='metric', lang='pt_br') -> None:
         self.city = city
         self.unit = unit
         self.lang = lang
 
-        with open('credentials.json', 'r') as credentials:
+        with open('./src/functionalities/credentials.json', 'r') as credentials:
             d = json.load(credentials)
             self.API_KEY = d['weather']['API_KEY'] 
         
@@ -24,9 +22,3 @@ class OpenWeather():
     
     def get_temperature(self):
         return self.weather_data['main']['temp']
-
-    
-
-l = OpenWeather()
-
-print(l.get_weather())
