@@ -20,3 +20,5 @@ class OnlineSearch():
         text = text.replace(' ', '+')
         search = requests.get(f'https://customsearch.googleapis.com/customsearch/v1?key={self.API_KEY}&cx={self.SEARCH_ENGINE_ID}&g1={self.geolocation_parameter}&cr={self.country_parameter}&q={text}')
         return search.json()
+
+    #TODO: implementar quick-search com web scrapping do google.
