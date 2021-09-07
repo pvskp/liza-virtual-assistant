@@ -1,3 +1,4 @@
+import wikipedia
 from src.liza import Liza
 
 def receber_comando(assistente):
@@ -32,6 +33,15 @@ def receber_comando(assistente):
 
                 elif (('tempo' in comando) or ('clima' in comando)):
                     assistente.weather()
+                
+                elif ('wikipédia' in comando):
+                    assistente.speak('O que voce deseja saber')
+                    wiki_search = 'None'
+
+                    while (wiki_search == 'None'):
+                        wiki_search = assistente.wikipedia_search()
+                    
+
 
 def main():
     assistente = Liza()

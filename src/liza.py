@@ -10,6 +10,7 @@ from src.functionalities.iot_functions import *
 from src.functionalities.number_to_month import convert_number_to_month
 from src.functionalities.dollar_currency import get_currency
 from src.functionalities.weather import OpenWeather
+from src.functionalities.wiki_search import Wikipedia
 
 class Liza():
     def __init__(self, voice='mb-br4', rate=110, locale='Campinas') -> None:
@@ -40,6 +41,7 @@ class Liza():
     def speak(self, text):
         execute(f'espeak -s {self.rate} -v {self.voice} "{text}"')
 
+
     def listening(self):
         command = "Comando não reconhecido"
         with sr.Microphone() as source:
@@ -54,7 +56,7 @@ class Liza():
             print(listeningError)
             self.speak("Desculpe não entendi")
 
-            return "None"
+            return 'None'
 
         return command.lower()
 
@@ -98,3 +100,23 @@ class Liza():
         
         else:
             self.speak("Me desculpe, ainda não sei identificar o tempo nestas condições")
+
+    def wikipedia_search(self):
+        question = self.listening()
+
+        if (question == 'None'):
+            return 'None'
+
+        self.speak('Só um minuto')
+        wiki = Wikipedia()
+        answer = wiki.get_summary(f'{question}')
+        
+        if (answer != 'None'):
+            self.speak(answer)
+
+            return answer
+        
+        else:
+            self.speak('Sua busca foi complexa demais tente novamente')
+            return 'None'
+

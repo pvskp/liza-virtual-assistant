@@ -23,7 +23,3 @@ class OpenWeather():
     
     def get_temperature(self):
         return self.weather_data['main']['temp']
-
-l = OpenWeather()
-
-print(l.get_weather())
