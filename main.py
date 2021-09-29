@@ -1,6 +1,9 @@
 import wikipedia
 from src.liza import Liza
 
+# ideia: criar lista com diferentes strings que remetem às mesmas operações e utilizar sets para 
+# identificar quando alguma dessas palavras foi chamada
+
 def receber_comando(assistente):
     while True:
         if (assistente.was_called()):
@@ -40,8 +43,14 @@ def receber_comando(assistente):
 
                     while (wiki_search == 'None'):
                         wiki_search = assistente.wikipedia_search()
-                    
 
+                elif ('servidor' in comando):
+                    if ('status' in comando):
+                        assistente.check_server()
+                    elif ('parar' in comando):
+                        assistente.stop_server()
+                    elif('iniciar' in comando):
+                        assistente.start_server()
 
 def main():
     assistente = Liza()

@@ -1,12 +1,14 @@
 from os import system as execute
+from posixpath import expanduser
 import requests
-import json
 
-from read_credentials import *
+from src.functionalities.read_credentials import *
 
 FLASK_SERVER_URL = read_credentials('flask')['URL']
 
 # PS4 related
+
+# IDEIA: iniciar jogos específicos por meio da Liza
 
 def start_ps4():
     execute('ps4-waker')
@@ -21,16 +23,21 @@ def start_chiaki():
 # Flask server
 
 def check_flask_server():
-    if ((requests.get(FLASK_SERVER_URL + '/isalive')).status_code == 200):
-        return True
-    
-    return False
+
+    try:
+        if ((requests.get(FLASK_SERVER_URL + '/isalive')).status_code == 200):
+            return True
+    except:
+        return False
 
 def stop_flask_server():
-    requests.get(FLASK_SERVER_URL + '/shutdown')
+    try:
+        requests.get(FLASK_SERVER_URL + '/shutdown')
+    except:
+        print('servidor parado')
 
 def start_flask_server():
-    execute('${HOME}/Server/start_server.sh')
+    execute('nohup ${HOME}/Server/start_server.sh &')
 
 # Others
 

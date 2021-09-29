@@ -1,16 +1,14 @@
 import requests
 import json
-from os import getcwd, path
+from os import getcwd, path, read
+from src.functionalities.read_credentials import *
 
 class OpenWeather():
     def __init__(self,city='Campinas', unit='metric', lang='pt_br') -> None:
         self.city = city
         self.unit = unit
         self.lang = lang
-
-        with open(path.abspath(getcwd())+'/credentials.json', 'r') as credentials:
-            d = json.load(credentials)
-            self.API_KEY = d['weather']['API_KEY'] 
+        self.API_KEY = read_credentials('weather')['API_KEY']
         
         self.request_json()
     

@@ -1,8 +1,6 @@
 import pyttsx3
 
-
 #Script to see the avaliable voices in the system
-
 
 index = -1
 

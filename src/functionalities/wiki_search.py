@@ -10,9 +10,7 @@ class Wikipedia():
     def get_summary(self, text):
         try:
             summary = wikipedia.summary(f'{text}')
-
-            return summary[:summary.index('.')]
+            return summary[:summary.index('.')] # Retorna o texto somente até o primeiro ponto final.
 
         except:
-
             return 'None'
