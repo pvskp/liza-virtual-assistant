@@ -2,8 +2,6 @@ from sys import setdlopenflags
 import speech_recognition as sr
 import time
 import datetime
-import requests
-import json
 from os import system as execute
 
 from src.functionalities.iot_functions import *
@@ -43,6 +41,12 @@ class Liza():
 
 
     def listening(self):
+        """
+        Liza starts listening.
+
+        Receive: nothing.
+        Returns: input audio as string.
+        """
         command = "Comando não reconhecido"
         with sr.Microphone() as source:
             audio = self.recognizer.listen(source)
@@ -61,10 +65,22 @@ class Liza():
         return command.lower()
 
     def time(self):
+        """
+        Liza speak the actual time.
+
+        Receive: nothing.
+        Return: nothing.
+        """
         now = datetime.datetime.now()
         self.speak(f"Agora são {now.hour} horas e {now.minute} minutos")
 
     def date(self):
+        """
+        Liza speak today's date.
+
+        Receive: nothing.
+        Return: nothing.
+        """
         now = datetime.datetime.now()
         self.speak(f"Hoje é dia {now.day} de {convert_number_to_month(now.month)} de {now.year}")
 
@@ -74,6 +90,12 @@ class Liza():
         self.speak("Como está")
 
     def present_yourself(self):
+        """
+        Liza introduces herself.
+
+        Receive: nothing.
+        Return: nothing.
+        """
         self.speak("Meu nome é Liza, fui desenvolvida para um projeto pessoal por Paulo Vinícius")
 
     def get_dollar_currency(self):
@@ -96,10 +118,15 @@ class Liza():
         temp = info.get_temperature()
 
         if (weather == 'Clear'):
-            self.speak(f"Em {self.locale} o clima está limpo e a temperatura é de aproximadamente {temp:.0f} graus celsius")
-        
+            self.speak(f"Em {self.locale} o clima está limpo.")
+        elif (weather == 'Rain'):
+            self.speak(f"Em {self.locale} o clima está chuvoso.")        
+        elif (weather == 'Extreme'):
+            self.speak(f"Em {self.locale} o clima está extremo, tenha cuidado.")
         else:
             self.speak("Me desculpe, ainda não sei identificar o tempo nestas condições")
+
+        self.speak(f"A temperatura é de aproximadamente {temp:.0f} graus celsius")
 
     def wikipedia_search(self):
         question = self.listening()
@@ -110,13 +137,24 @@ class Liza():
         self.speak('Só um minuto')
         wiki = Wikipedia()
         answer = wiki.get_summary(f'{question}')
-        
         if (answer != 'None'):
             self.speak(answer)
 
             return answer
-        
         else:
             self.speak('Sua busca foi complexa demais tente novamente')
             return 'None'
 
+    def check_server(self):
+        if check_flask_server():
+            self.speak('Servidor está online')
+        else:
+            self.speak('Servidor está desligado')
+
+    def stop_server(self):
+        self.speak('Parando o servidor')
+        stop_flask_server()
+    
+    def start_server(self):
+        self.speak('Ligando o servidor')
+        start_flask_server()

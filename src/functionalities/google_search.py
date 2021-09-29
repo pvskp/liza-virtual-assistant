@@ -1,6 +1,9 @@
+from _typeshed import ReadableBuffer
 import requests
 import json
 from os import path, getcwd
+
+from read_credentials import *
 
 class OnlineSearch():
     def __init__(self, geolocation_parameter='pt-BR', country_parameter='countryBR') -> None:
@@ -9,12 +12,7 @@ class OnlineSearch():
         self.SEARCH_ENGINE_ID = self.google_credentials['search_id']
         self.geolocation_parameter = geolocation_parameter
         self.country_parameter = country_parameter
-
-
-    def request_json(self):
-        with open(path.abspath(getcwd())+'/credentials.json') as credentials:
-            d = json.load(credentials)
-            self.google_credentials = d['google_search']
+        self.google_credentials = read_credentials('google_search')
     
     def google_seach(self, text):
         text = text.replace(' ', '+')
